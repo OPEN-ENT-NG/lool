@@ -11,7 +11,7 @@ public class DateHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DateHelper.class);
 
-    public static final String SQL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String  ISO8601_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String MONGO_DATE_FORMAT = "yyyy-MM-dd HH:mm.ss";
 
 

@@ -29,6 +29,8 @@ import org.entcore.common.controller.ControllerHelper;
 import org.entcore.common.storage.Storage;
 import org.entcore.common.user.UserUtils;
 
+import java.text.ParseException;
+
 import static org.entcore.common.http.response.DefaultResponseHandler.defaultResponseHandler;
 
 public class WopiController extends ControllerHelper {
@@ -59,7 +61,6 @@ public class WopiController extends ControllerHelper {
                     if (event.isRight()) {
                         JsonObject document = event.right().getValue();
                         JsonObject metadata = document.getJsonObject(Field.METADATA);
-
                         // Create wopi response config
                         JsonObject response = new JsonObject()
                                 .put(Field.BASEFILENAME, document.getString(Field.NAME))
@@ -67,10 +68,9 @@ public class WopiController extends ControllerHelper {
                                 .put(Field.OWNERID, document.getString(Field.OWNER))
                                 .put(Field.USERID, token.getUser())
                                 .put(Field.USERFRIENDLYNAME, token.getDisplayName())
-                                .put(Field.VERSION, DateHelper.getDateString(document.getString(Field.MODIFIED), DateHelper.MONGO_DATE_FORMAT, DateHelper.SQL_FORMAT))
-                                .put(Field.LASTMODIFIEDTIME, DateHelper.getDateString(document.getString(Field.MODIFIED), DateHelper.MONGO_DATE_FORMAT, DateHelper.SQL_FORMAT))
+                                .put(Field.VERSION, DateHelper.getDateString(document.getString(Field.MODIFIED), DateHelper.MONGO_DATE_FORMAT, DateHelper.ISO8601_FORMAT))
+                                .put(Field.LASTMODIFIEDTIME, DateHelper.getDateString(document.getString(Field.MODIFIED), DateHelper.MONGO_DATE_FORMAT, DateHelper.ISO8601_FORMAT))
                                 .put(Field.USERCANWRITE, canWrite);
-
                         // Merge server capabilities into wopi response config
                         response.mergeIn(new JsonObject(wopiService.config().serverCapabilities()));
                         renderJson(request, response);
