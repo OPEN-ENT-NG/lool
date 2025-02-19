@@ -88,9 +88,20 @@ export const create = {
         },
         createDocument: function (e: Event) {
             e.preventDefault();
+            const forbiddenRegex = /[\/\\<>|]/g;
+            this.document.name = this.document.name.trim().replace(forbiddenRegex, '');
             window.open(`/lool/document?type=${this.document.extension}&name=${this.document.name}${loolDocument.folder ? `&folder=${loolDocument.folder}` : ''}`);
             this.lightbox.display = false;
             this.initDocument();
+        },
+        preventForbiddenChars: function ($event) {
+            var char = $event.key;
+          
+            var forbiddenRegex = /[\/\\<>|]/;
+          
+            if (forbiddenRegex.test(char)) {
+              $event.preventDefault();
+            }
         }
     }
 }

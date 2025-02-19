@@ -40,7 +40,8 @@
         <div class="row">
             <div class="cell twelve">
                 <input type="text" ng-model="document.name" class="twelve"
-                       i18n-placeholder="lool.sniple.create-document.filename"/>
+                       i18n-placeholder="lool.sniple.create-document.filename"
+                       ng-maxlength="80" maxlength="80" ng-keypress="preventForbiddenChars($event)" />
             </div>
         </div>
         <div class="row">
